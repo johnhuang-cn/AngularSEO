@@ -12,11 +12,10 @@ import javax.servlet.ServletResponse;
 import javax.servlet.UnavailableException;
 import javax.servlet.http.HttpServletRequest;
 
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.phantomjs.PhantomJSDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import net.angularseo.crawler.CachePageManager;
+import net.angularseo.crawler.CrawlTaskManager;
+import net.angularseo.util.UserAgentUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,12 +25,14 @@ import org.slf4j.LoggerFactory;
 public class RobotFilter implements Filter {
 	
 	// The time to wait js dynamic page finish loading
-	private static int WAIT_FOR_PAGE_LOAD = 5;
+	private static int Default_WAIT_FOR_PAGE_LOAD = 5;
 	// The interval the crawler re-crawl the site to generate the static page
 	// the unit is hour
-	private static int CACHE_TIMEOUT = 24;
+	private static int DEFAULT_CACHE_TIMEOUT = 24;
 	
 	private Logger logger = LoggerFactory.getLogger(RobotFilter.class);
+	
+	private boolean isFirst = true; 
 	
     /**
      * Default constructor. 
@@ -43,6 +44,7 @@ public class RobotFilter implements Filter {
 	 * @see Filter#init(FilterConfig)
 	 */
 	public void init(FilterConfig fConfig) throws ServletException {
+		// Set the execute path of phantomjs 
 		String phanatomPath = fConfig.getInitParameter("phantomjs.binary.path");
 		if (phanatomPath == null) {
 			throw new UnavailableException("Please set the phantomjs.binary.path param for RobotFilter in web.xml");
@@ -51,38 +53,64 @@ public class RobotFilter implements Filter {
 		if (!f.exists()) {
 			throw new UnavailableException("Cannot find phantomjs binary in given RobotFilter phantomjs.binary.path " + phanatomPath);
 		}
-		
-		// Set the execute path of phantomjs 
     	System.setProperty("phantomjs.binary.path", phanatomPath);
     	
     	// Set the time to wait the page finish loading
-    	String waitForPageLoad = fConfig.getInitParameter("waitForPageLoad");
-    	if (waitForPageLoad != null) {
+    	String waitForPageLoadStr = fConfig.getInitParameter("waitForPageLoad");
+    	int waitForPageLoad = Default_WAIT_FOR_PAGE_LOAD;
+    	if (waitForPageLoadStr != null) {
     		try {
-				WAIT_FOR_PAGE_LOAD = Integer.parseInt(waitForPageLoad);
+    			waitForPageLoad = Integer.parseInt(waitForPageLoadStr);
 			} catch (NumberFormatException e) {
 			}
     	}
     	
+    	// Set customize robot user agent
     	String robotUserAgent = fConfig.getInitParameter("robotUserAgents");
     	UserAgentUtil.initCustomizeAgents(robotUserAgent);
     	
-    	// Get crawl setting
-    	String cacheTimeout = fConfig.getInitParameter("cacheTimeout");
-    	if (cacheTimeout != null) {
+    	// Get cache timeout, crawler will re-crawl when cache timeout
+    	String cacheTimeoutStr = fConfig.getInitParameter("cacheTimeout");
+    	int cacheTimeout = DEFAULT_CACHE_TIMEOUT;
+    	if (cacheTimeoutStr != null) {
     		try {
-    			CACHE_TIMEOUT = Integer.parseInt(cacheTimeout);
+    			cacheTimeout = Integer.parseInt(cacheTimeoutStr);
 			} catch (NumberFormatException e) {
 			}
     	}
     	
+    	// Get cache path
     	String cachePath = fConfig.getInitParameter("cachePath");
     	if (cachePath == null) {
     		throw new UnavailableException("Please set the cachePath param for RobotFilter in web.xml");
     	}
-    	logger.info("RobotFilter started with {}, {}, {}, {}, {}", phanatomPath, WAIT_FOR_PAGE_LOAD, robotUserAgent, CACHE_TIMEOUT, cachePath);
     	
-    	new CrawlManager().schedule(CACHE_TIMEOUT, cachePath);
+    	// Get the default encoding of site
+    	String encoding = fConfig.getInitParameter("encoding");
+    	if (encoding == null) {
+    		encoding = "UTF-8";
+    	}
+    	
+    	// Get crawl depth
+    	String crawlDepthStr = fConfig.getInitParameter("crawlDepth");
+    	int crawlDepth = 2;
+    	if (crawlDepthStr != null) {
+    		try {
+    			crawlDepth = Integer.parseInt(crawlDepthStr);
+			} catch (NumberFormatException e) {
+			}
+    	}
+    	
+    	logger.info("RobotFilter started with {}, {}, {}, {}, {}", phanatomPath, waitForPageLoad, robotUserAgent, cacheTimeout, cachePath);
+    	
+    	AngularSEOConfig config = AngularSEOConfig.getConfig();
+    	config.cachePath = cachePath;
+    	config.cacheTimeout = cacheTimeout;
+    	config.waitForPageLoad = waitForPageLoad;
+    	config.encoding = encoding;
+    	config.crawlDepth = crawlDepth;
+    	
+    	CrawlTaskManager.getInstance().schedule();
 	}
 	
 	/**
@@ -90,45 +118,25 @@ public class RobotFilter implements Filter {
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
-		String userAgent = req.getHeader("User-Agent");
+		if (isFirst) {
+			String rootUrl = req.getRequestURL().toString();
+			rootUrl = rootUrl.replaceFirst("(http://[^/]*).*", "$1");
+			AngularSEOConfig.getConfig().setRootURL(rootUrl);
+			isFirst = false;
+		}
 		
+		String userAgent = req.getHeader("User-Agent");
+		logger.info(userAgent); // TODO: remove this tmp code
 		if (UserAgentUtil.isRobot(req) && isTextRequest(req)) {
-			logger.info("Generating static html for search engine robot: " + userAgent);
-			String html = getStaticHTML(req);
+			logger.info("Search engine robot request: {}", userAgent);
+			logger.info("Load static html for robot: " + req.getRequestURL());
+			String html = CachePageManager.get(req.getRequestURL().toString());
+			response.setCharacterEncoding(AngularSEOConfig.getConfig().encoding);
 			response.getWriter().write(html);
 		}
 		else {
 			chain.doFilter(request, response);
 		}
-	}
-	
-	/**
-	 * Get static page by PhantomJSDriver
-	 * 
-	 * @param request
-	 * @return
-	 */
-	private String getStaticHTML(HttpServletRequest request) {
-    	// Create a new instance of the Firefox driver
-        WebDriver driver = new PhantomJSDriver(DesiredCapabilities.phantomjs());
-        // won't set it may cause invisible element issue
-        driver.manage().window().setSize(new Dimension(1280, 1024));
-
-        // get the static page
-        String url = request.getRequestURL().toString();
-        driver.get(url);
-
-        // The angularjs page rendered dynamically with JavaScript.
-        // Wait for the page to load, timeout after 5 seconds
-        new WebDriverWait(driver, WAIT_FOR_PAGE_LOAD);
-        
-        String html = driver.getPageSource();
-        logger.debug(html);
-        
-        //Close the browser
-        driver.quit();
-        
-        return html;
 	}
 	
 	/**

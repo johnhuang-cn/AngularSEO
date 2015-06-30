@@ -1,4 +1,4 @@
-package net.angularseo;
+package net.angularseo.util;
 
 import javax.servlet.http.HttpServletRequest;
 
