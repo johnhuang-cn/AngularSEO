@@ -46,5 +46,5 @@ The simple guide is:
 # Contact
 
 http://www.angularseo.net<br>
-http://www.missionsky.com
+http://www.missionsky.com<br>
 John Huang: john.h.cn@gmail.com
