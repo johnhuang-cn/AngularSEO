@@ -4,7 +4,7 @@ AngularSEO is a JEE filter make AngularJS + JEE web site can be crawled by searc
 
 # How it works?
 
-* When web application started and received the fisrst request, AngularSEO will start a crawler to crawl the whole site, and generate a static version of the site in a cache folder.
+* When web application started and received the first request, AngularSEO will start a crawler to crawl the whole site, and generate a static version of the site in a cache folder.
 * AngularSEO filter will check the User-Agent keyword in http header to identify if the request is from search engine robot. 
 * If it is a robot request, AngularSEO filter will response with a static page instead
 * All hashbang links in the page will be well transformed to normal links. e.g. http://www.abc.com/#!/about -> http://www.abc.com/_23_21/about. So the hashbang links would also be crawled normally.
@@ -16,7 +16,7 @@ Original AngularJS page source code:
 ```
 <a href="#about"><div ng-bind="message"></div></a>
 ```
-->>>>
+->
 Static page source code:
 ```
 <a href="http://host/_23/about"><div ng-bind="message">the true message after binding</div></a>
@@ -45,5 +45,5 @@ The simple guide is:
 
 # Contact
 
-http://www.angularseo.net
+http://www.angularseo.net<br>
 John Huang: john.h.cn@gmail.com
