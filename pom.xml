@@ -10,6 +10,5 @@
   <modules>
   	<module>angular-seo-filter</module>
     <module>angular-seo-web</module>
-    <module>angular-web</module>
   </modules>
 </project>

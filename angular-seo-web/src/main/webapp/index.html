@@ -1,7 +1,265 @@
 <!DOCTYPE html>
-<html>
-<body>
-<h2>Hello World AngularSEO!</h2>
-<img src="images/good.jpg"/>
+<html ng-app="AngularSEOApp">
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->  
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->  
+<!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->  
+<head>
+    <title>AngularJS SEO - Make AngularJS Website Crawlable</title>
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">    
+    <link rel="shortcut icon" href="favicon.ico">  
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,300italic,400italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'> 
+    <!-- Global CSS -->
+    <link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">
+    <!-- Plugins CSS -->    
+    <link rel="stylesheet" href="assets/plugins/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="assets/plugins/prism/prism.css">
+    <!-- Theme CSS -->  
+    <link id="theme-style" rel="stylesheet" href="assets/css/styles.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src="angular/angular.min.js"></script>
+    <script src="js/content.js"></script>
+</head> 
+
+<body data-spy="scroll" ng-controller="ContentController as content">
+
+    <!---//Facebook button code-->
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+
+    <!-- ******HEADER****** --> 
+    <header id="header" class="header">  
+        <div class="container">            
+            <h1 class="logo pull-left">
+                <a class="scrollto" href="#promo">
+                    <span class="logo-title">AngularSEO</span>
+                </a>
+            </h1><!--//logo-->              
+            <nav id="main-nav" class="main-nav navbar-right" role="navigation">
+                <div class="navbar-header">
+                    <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button><!--//nav-toggle-->
+                </div><!--//navbar-header-->            
+                <div class="navbar-collapse collapse" id="navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="active nav-item sr-only"><a class="scrollto" href="#promo">Home</a></li>
+                        <li class="nav-item"><a class="scrollto" href="#about">About</a></li>
+                        <!--<li class="nav-item"><a class="scrollto" href="#features">Features</a></li>-->
+                        <li class="nav-item"><a class="scrollto" href="#docs">Guide</a></li>
+                        <li class="nav-item"><a class="scrollto" href="#license">License</a></li>
+                        <li class="nav-item last"><a class="scrollto" href="#contact">Contact</a></li>
+                    </ul><!--//nav-->
+                </div><!--//navabr-collapse-->
+            </nav><!--//main-nav-->
+        </div>
+    </header><!--//header-->
+    
+    <!-- ******PROMO****** -->
+    <section id="promo" class="promo section offset-header">
+        <div class="container text-center">
+            <h2 class="title">Angular<span class="highlight">SEO</span></h2>
+            <p class="intro">{{content.description}}</p>
+            <div class="btns">
+                <a class="btn btn-cta-secondary" href="#about">Learn</a>
+                <a class="btn btn-cta-primary" href="https://github.com/johnhuang-cn/AngularSEO" target="_blank">Download</a>
+            </div>
+            <ul class="meta list-inline">
+                <li><a href="https://github.com/johnhuang-cn/AngularSEO" target="_blank">View on GitHub</a></li>
+                <li><a href="#docs">Guide</a></li>
+            </ul><!--//meta-->
+        </div><!--//container-->
+        <div class="social-media">
+            <div class="social-media-inner container text-center">
+                <ul class="list-inline">
+                    
+                    <li class="twitter-tweet">
+                        <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://www.angularseo.net">Tweet</a>
+                        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+                    </li><!--//twitter-tweet-->
+                    <li class="facebook-like">
+                         <div class="fb-like" data-href="http://www.angularseo.net/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
+                    </li><!--//facebook-like-->
+                    <!--// Generate github buttons: https://github.com/mdo/github-buttons -->
+                    <li class="github-star"><iframe src="http://ghbtns.com/github-btn.html?user=johnhuang-cn&repo=AngularSEO&type=watch&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="110" height="20"></iframe></li>
+                    <li class="github-fork"><iframe src="http://ghbtns.com/github-btn.html?user=johnhuang-cn&repo=AngularSEO&type=fork" allowtransparency="true" frameborder="0" scrolling="0" width="53" height="20"></iframe></li>
+                    <!--//
+                    <li class="github-follow"><iframe src="http://ghbtns.com/github-btn.html?user=mdo&type=follow&count=true"
+  allowtransparency="true" frameborder="0" scrolling="0" width="165" height="20"></iframe></li>
+                    -->
+                </ul>
+            </div>
+        </div>
+    </section><!--//promo-->
+    
+    <!-- ******ABOUT****** --> 
+    <section id="about" class="about section">
+        <div class="container">
+            <h2 class="title text-center">{{content.aboutTitle}}</h2>
+            <p class="intro text-center">{{content.aboutDetail}}</p>
+            <div class="row">
+                <div class="item col-md-4 col-sm-6 col-xs-12">
+                    <div class="icon-holder">
+                        <i class="fa fa-arrow-circle-o-right"></i>
+                    </div>
+                    <div class="content">
+                        <h3 class="sub-title">{{content.aboutTitle1}}</h3>
+                        <p>{{content.aboutDetail1}}</p>
+                    </div><!--//content-->
+                </div><!--//item-->
+                <div class="item col-md-4 col-sm-6 col-xs-12">
+                    <div class="icon-holder">
+                        <i class="fa fa-arrow-circle-o-right"></i>
+                    </div>
+                    <div class="content">
+                        <h3 class="sub-title">{{content.aboutTitle2}}</h3>
+                        <p>{{content.aboutDetail2}}</p>
+                    </div><!--//content-->
+                </div><!--//item-->
+                <div class="item col-md-4 col-sm-6 col-xs-12">
+                    <div class="icon-holder">
+                        <i class="fa fa-arrow-circle-o-right"></i>
+                    </div>
+                    <div class="content">
+                        <h3 class="sub-title">{{content.aboutTitle3}}</h3>
+                        <p>{{content.aboutDetail3}}</p>
+                    </div><!--//content-->
+                </div><!--//item-->           
+                <div class="clearfix visible-md"></div>    
+                <div class="item col-md-4 col-sm-6 col-xs-12">
+                    <div class="icon-holder">
+                        <i class="fa fa-arrow-circle-o-right"></i>
+                    </div>
+                    <div class="content">
+                        <h3 class="sub-title">{{content.aboutTitle4}}</h3>
+                        <p>{{content.aboutDetail4}}</p>
+                    </div><!--//content-->
+                </div><!--//item-->                
+                <div class="item col-md-4 col-sm-6 col-xs-12">
+                    <div class="icon-holder">
+                        <i class="fa fa-arrow-circle-o-right"></i>
+                    </div>
+                    <div class="content">
+                        <h3 class="sub-title">{{content.aboutTitle5}}</h3>
+                        <p>{{content.aboutDetail5}}</p>
+                    </div><!--//content-->
+                </div><!--//item-->
+                <div class="item col-md-4 col-sm-6 col-xs-12">
+                    <div class="icon-holder">
+                        <i class="fa fa-arrow-circle-o-right"></i>
+                    </div>
+                    <div class="content">
+                        <h3 class="sub-title">{{content.aboutTitle6}}</h3>
+                        <p>{{content.aboutDetail6}}<a href=\"https://github.com/angular/angular.js/blob/master/LICENSE\" target=\"_blank\"> MIT License.</a></p>
+                    </div><!--//content-->
+                </div><!--//item-->               
+            </div><!--//row-->            
+        </div><!--//container-->
+    </section><!--//about-->
+
+    <!-- ******DOCS****** --> 
+    <section id="docs" class="docs section">
+        <div class="container">
+            <div class="docs-inner">
+            <h2 class="title text-center">Get Started</h2>
+            <div class="block">
+                <h3 class="sub-title text-left">Install PhantomJS</h3>
+                <p><a href="http://phantomjs.org/" target="_blank">PhantomJS</a> is used as a headless browser to generate the static page.</p>
+                <p>Please <a href="http://phantomjs.org/download.html" target="_blank">download it</a> and extract the content to the web site server.</p>
+            </div><!--//block-->
+            <div class="block">
+                <h3 class="sub-title text-left">{{content.guideTitle2}}</h3>
+                <p>{{content.guideDetail2}}</p>
+            </div>
+            <div class="block">
+                <h3 class="sub-title text-left">{{content.guideTitle3}}</h3>
+                <p>{{content.guideDetail3}}</p>
+                <p class="text-center">
+                    <a class="btn btn-cta-primary" href="https://github.com/johnhuang-cn/AngularSEO" target="_blank">More on GitHub</a>
+                </p>
+            </div><!--//block-->
+            
+            </div><!--//docs-inner-->         
+        </div><!--//container-->
+    </section><!--//features-->
+    
+    <!-- ******LICENSE****** --> 
+    <section id="license" class="license section">
+        <div class="container">
+            <div class="license-inner">
+            <h2 class="title text-center">License</h2>
+                <div class="info">
+                    <p>This AngularSEO Filter is made by <a href="mailto: john.h.cn@gmail.com" target="_blank">John Huang</a> and is <strong>100% FREE</strong> under the <a href="https://github.com/angular/angular.js/blob/master/LICENSE" target="_blank"> MIT License.</a></p>
+                </div><!--//info-->
+            </div><!--//license-inner-->
+        </div><!--//container-->
+    </section><!--//how-->
+    
+    <!-- ******CONTACT****** --> 
+    <section id="contact" class="contact section has-pattern">
+        <div class="container">
+            <div class="contact-inner">
+                <h2 class="title  text-center">Contact</h2>
+                <p class="intro  text-center">I hope you find this AngularSEO Filter useful. <br />Feel free to get in touch if you have any questions or suggestions.</p>
+                <div class="author-message">                      
+                    <div class="profile">
+                        <img class="img-responsive" src="assets/images/profile.png" alt="" />
+                    </div><!--//profile-->
+                    <div class="speech-bubble">
+                        <h3 class="sub-title">Next plans?</h3>
+                        <p>{{content.nextPlan1}}</p>
+                        <p ng-bind="content.nextPlan2"></p>
+                        <div class="source">
+                            <span class="name">John Huang</span>
+                            <br />
+                            <span class="title">Architect</span>
+                        </div><!--//source-->
+                    </div><!--//speech-bubble-->
+                </div><!--//author-message-->
+                <div class="clearfix"></div>
+                <div class="info text-center">
+                    <h4 class="sub-title">Get Connected</h4>
+                    <ul class="social-icons list-inline">
+                        <li class="last"><a href="mailto: john.h.cn@gmail.com"><i class="fa fa-envelope"></i></a></li>
+                    </ul>
+                </div><!--//info-->
+            </div><!--//contact-inner-->
+        </div><!--//container-->
+    </section><!--//contact-->  
+      
+    <!-- ******FOOTER****** --> 
+    <footer class="footer">
+        <div class="container text-center">
+            <small class="copyright">This site template is designed with <i class="fa fa-heart"></i> by <a href=https://www.linkedin.com/in/xiaoying" target="_blank">Xiaoying Riley</a> for developers</small>
+        </div><!--//container-->
+    </footer><!--//footer-->
+     
+    <!-- Javascript -->          
+    <script type="text/javascript" src="assets/plugins/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="assets/plugins/jquery-migrate-1.2.1.min.js"></script>    
+    <script type="text/javascript" src="assets/plugins/jquery.easing.1.3.js"></script>   
+    <script type="text/javascript" src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>     
+    <script type="text/javascript" src="assets/plugins/jquery-scrollTo/jquery.scrollTo.min.js"></script> 
+    <script type="text/javascript" src="assets/plugins/prism/prism.js"></script>    
+    <script type="text/javascript" src="assets/js/main.js"></script>       
 </body>
-</html>
+</html> 
+

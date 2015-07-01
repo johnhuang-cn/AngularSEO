@@ -131,8 +131,13 @@ public class RobotFilter implements Filter {
 			logger.info("Search engine robot request: {}", userAgent);
 			logger.info("Load static html for robot: " + req.getRequestURL());
 			String html = CachePageManager.get(req.getRequestURL().toString());
-			response.setCharacterEncoding(AngularSEOConfig.getConfig().encoding);
-			response.getWriter().write(html);
+			if (html == null) {
+				chain.doFilter(request, response);
+			}
+			else {
+				response.setCharacterEncoding(AngularSEOConfig.getConfig().encoding);
+				response.getWriter().write(html);
+			}
 		}
 		else {
 			chain.doFilter(request, response);
@@ -158,7 +163,6 @@ public class RobotFilter implements Filter {
 		}
 		
 		String ext = file.substring(p + 1);
-		// do I missed sth.
 		if ("html".equals(ext) || "htm".equals(ext) || "jsp".equals(ext)) {
 			return true;
 		}

@@ -14,11 +14,6 @@
   		<artifactId>javax.servlet-api</artifactId>
   		<version>3.1.0</version>
   	</dependency>
-  	<dependency>
-  		<groupId>javax.servlet.jsp</groupId>
-  		<artifactId>jsp-api</artifactId>
-  		<version>2.2.1-b03</version>
-  	</dependency>
 	<dependency>
 		<groupId>org.seleniumhq.selenium</groupId>
 		<artifactId>selenium-java</artifactId>

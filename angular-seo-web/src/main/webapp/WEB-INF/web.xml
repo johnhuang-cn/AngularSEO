@@ -9,26 +9,45 @@
 		<display-name>RobotFilter</display-name>
 		<description>AngularSEO Filter</description>
 		<filter-class>net.angularseo.RobotFilter</filter-class>
+		<!-- The path to the PhantomJS binary -->
 		<init-param>
 			<param-name>phantomjs.binary.path</param-name>
 			<param-value>C:\\Users\\john.huang\\Desktop\\AngularJS SEO\\phw\\bin\\phantomjs.exe</param-value>
 		</init-param>
+		<!-- The time to wait the AngularJS page finish loading all data, unit is second.
+			 Too short waiting, the page may only load partial content.
+		 -->
 		<init-param>
 			<param-name>waitForPageLoad</param-name>
 			<param-value>3</param-value>
 		</init-param>
+		<!-- Filter already embed google, bing, baidu AserAgent keywords,
+		     If you want to support more, add them and split with |
+		 -->
 		<init-param>
 			<param-name>robotUserAgents</param-name>
 			<param-value>YodaoBot|Zealbot</param-value>
 		</init-param>
+		<!-- The interval that RobotFilter would re-generated the static page in the cache folder -->
 		<init-param>
 			<param-name>cacheTimeout</param-name>
 			<param-value>24</param-value>
 		</init-param>	
+		<!-- The path to save the static version pages -->
 		<init-param>
 			<param-name>cachePath</param-name>
 			<param-value>c:\\cache</param-value>
-		</init-param>	
+		</init-param>
+		<!-- RobotFilter crawl the site to generate the static pages, crawlDepth is used to limited the crawl depth -->
+		<init-param>
+			<param-name>crawlDepth</param-name>
+			<param-value>2</param-value>
+		</init-param>
+		<!-- The default page encoding of this site -->
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>		
 	</filter>
 	<filter-mapping>
 		<filter-name>RobotFilter</filter-name>

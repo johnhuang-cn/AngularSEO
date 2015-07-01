@@ -1,3 +1,3 @@
 # AngularSEO
 
-Still under developing
+Still under developing...
