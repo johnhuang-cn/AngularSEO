@@ -133,14 +133,20 @@ public class SEOFilter implements Filter {
 		logger.debug(userAgent);
 		if (UserAgentUtil.isRobot(req) && isTextRequest(req)) {
 			logger.info("Search engine robot request: {}", userAgent);
-			logger.info("Load static html for robot: " + (req.getRequestURL().toString() + "?" + req.getQueryString()));
-			String html = CachePageManager.get(req.getRequestURL().toString() + "?" + req.getQueryString());
+			StringBuilder url = new StringBuilder(req.getRequestURL().toString());
+			String qryStr = req.getQueryString();
+			if (qryStr != null) {
+				url.append("?").append(qryStr);
+			}
+			String html = CachePageManager.get(url.toString());
 			if (html == null) {
+				logger.info("Not found static html for robot: " + url.toString());
 				// Crawl it then it can be crawled next time
-				CrawlTaskManager.getInstance().addCrawlRequest(new CrawlRequest(req.getRequestURL().toString() + "?" + req.getQueryString(), 0));
+				CrawlTaskManager.getInstance().addCrawlRequest(new CrawlRequest(url.toString(), 0));
 				chain.doFilter(request, response);
 			}
 			else {
+				logger.info("Load static html for robot: " + url.toString());
 				response.setCharacterEncoding(AngularSEOConfig.getConfig().encoding);
 				response.getWriter().write(html);
 			}
