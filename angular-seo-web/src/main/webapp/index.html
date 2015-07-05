@@ -4,7 +4,7 @@
 <!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->  
 <!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->  
 <head>
-    <title>AngularJS SEO - Make AngularJS Website Crawlable</title>
+    <title>AngularJS SEO Filter - Make AJAX sites Crawlable</title>
     <!-- Meta -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -63,7 +63,7 @@
                     <ul class="nav navbar-nav">
                         <li class="active nav-item sr-only"><a class="scrollto" href="#promo">Home</a></li>
                         <li class="nav-item"><a class="scrollto" href="#about">About</a></li>
-                        <!--<li class="nav-item"><a class="scrollto" href="#features">Features</a></li>-->
+                        <li class="nav-item"><a class="scrollto" href="#features">Features</a></li>
                         <li class="nav-item"><a class="scrollto" href="#docs">Guide</a></li>
                         <li class="nav-item"><a class="scrollto" href="#license">License</a></li>
                         <li class="nav-item last"><a class="scrollto" href="#contact">Contact</a></li>
@@ -76,11 +76,11 @@
     <!-- ******PROMO****** -->
     <section id="promo" class="promo section offset-header">
         <div class="container text-center">
-            <h2 class="title">Angular<span class="highlight">SEO</span></h2>
+            <h2 class="title" style="font-size:52px">Angular<span class="highlight" style="font-size:52px">SEO</span></h2>
             <p class="intro">{{content.description}}</p>
             <div class="btns">
                 <a class="btn btn-cta-secondary" href="#about">Learn</a>
-                <a class="btn btn-cta-primary" href="https://github.com/johnhuang-cn/AngularSEO" target="_blank">Download</a>
+                <a class="btn btn-cta-primary" href="https://github.com/johnhuang-cn/AngularSEO/releases" target="_blank">Download</a>
             </div>
             <ul class="meta list-inline">
                 <li><a href="https://github.com/johnhuang-cn/AngularSEO" target="_blank">View on GitHub</a></li>
@@ -111,12 +111,13 @@
     </section><!--//promo-->
     
     <!-- ******ABOUT****** --> 
+
     <section id="about" class="about section">
         <div class="container">
             <h2 class="title text-center">{{content.aboutTitle}}</h2>
             <p class="intro text-center">{{content.aboutDetail}}</p>
             <div class="row">
-                <div class="item col-md-4 col-sm-6 col-xs-12">
+                <div class="item col-md-6 col-sm-12 col-xs-12">
                     <div class="icon-holder">
                         <i class="fa fa-arrow-circle-o-right"></i>
                     </div>
@@ -125,7 +126,7 @@
                         <p>{{content.aboutDetail1}}</p>
                     </div><!--//content-->
                 </div><!--//item-->
-                <div class="item col-md-4 col-sm-6 col-xs-12">
+                <div class="item col-md-6 col-sm-12 col-xs-12">
                     <div class="icon-holder">
                         <i class="fa fa-arrow-circle-o-right"></i>
                     </div>
@@ -134,7 +135,8 @@
                         <p>{{content.aboutDetail2}}</p>
                     </div><!--//content-->
                 </div><!--//item-->
-                <div class="item col-md-4 col-sm-6 col-xs-12">
+                <div class="clearfix visible-md"></div>  
+                <div class="item col-md-6 col-sm-12 col-xs-12">
                     <div class="icon-holder">
                         <i class="fa fa-arrow-circle-o-right"></i>
                     </div>
@@ -143,38 +145,40 @@
                         <p>{{content.aboutDetail3}}</p>
                     </div><!--//content-->
                 </div><!--//item-->           
-                <div class="clearfix visible-md"></div>    
-                <div class="item col-md-4 col-sm-6 col-xs-12">
+                <div class="item col-md-6 col-sm-12 col-xs-12">
                     <div class="icon-holder">
                         <i class="fa fa-arrow-circle-o-right"></i>
                     </div>
                     <div class="content">
                         <h3 class="sub-title">{{content.aboutTitle4}}</h3>
                         <p>{{content.aboutDetail4}}</p>
-                    </div><!--//content-->
-                </div><!--//item-->                
-                <div class="item col-md-4 col-sm-6 col-xs-12">
-                    <div class="icon-holder">
-                        <i class="fa fa-arrow-circle-o-right"></i>
-                    </div>
-                    <div class="content">
-                        <h3 class="sub-title">{{content.aboutTitle5}}</h3>
-                        <p>{{content.aboutDetail5}}</p>
-                    </div><!--//content-->
-                </div><!--//item-->
-                <div class="item col-md-4 col-sm-6 col-xs-12">
-                    <div class="icon-holder">
-                        <i class="fa fa-arrow-circle-o-right"></i>
-                    </div>
-                    <div class="content">
-                        <h3 class="sub-title">{{content.aboutTitle6}}</h3>
-                        <p>{{content.aboutDetail6}}<a href=\"https://github.com/angular/angular.js/blob/master/LICENSE\" target=\"_blank\"> MIT License.</a></p>
-                    </div><!--//content-->
-                </div><!--//item-->               
+                    </div><!--//content-->    
+                </div><!--//item-->        
             </div><!--//row-->            
         </div><!--//container-->
     </section><!--//about-->
 
+    <!-- ******FEATURES****** --> 
+    <section id="features" class="features section">
+        <div class="container text-left">
+            <h2 class="title text-center">Features</h2>
+            <div class="item col-md-6 col-sm-12 col-xs-12">
+            <ul class="feature-list list-unstyled">
+                <li><i class="fa fa-check"></i> {{content.feature1}}</li>
+                <li><i class="fa fa-check"></i> {{content.feature2}}</li>
+                <li><i class="fa fa-check"></i> {{content.feature3}}</li>
+            </ul>
+            </div>
+            <div class="item col-md-6 col-sm-12 col-xs-12">
+            <ul class="feature-list list-unstyled">
+                <li><i class="fa fa-check"></i> {{content.feature4}}</li>
+                <li><i class="fa fa-check"></i> {{content.feature5}}</li>
+                <li><i class="fa fa-check"></i> {{content.feature6}}</li>
+            </ul>
+            </div>
+        </div><!--//container-->
+    </section><!--//features-->
+    
     <!-- ******DOCS****** --> 
     <section id="docs" class="docs section">
         <div class="container">
@@ -186,17 +190,73 @@
                 <p>Please <a href="http://phantomjs.org/download.html" target="_blank">download it</a> and extract the content to the web site server.</p>
             </div><!--//block-->
             <div class="block">
-                <h3 class="sub-title text-left">{{content.guideTitle2}}</h3>
-                <p>{{content.guideDetail2}}</p>
+                <h3 class="sub-title text-left">Add AngularSEO Filter to Project</h3>
+                <p><a href="https://github.com/johnhuang-cn/AngularSEO/releases" target="_blank">Download AngularSEO Filter</a> and extract it. There are 2 ways to use it:</p>
+                <p>1. Import angular-seo project to your Eclipse and add angular-seo/angular-seo-filter to your project's dependencies.</p>
+                <p>2. Add the lib/*.jars to your web app/WEB-INF/lib.
             </div>
             <div class="block">
-                <h3 class="sub-title text-left">{{content.guideTitle3}}</h3>
-                <p>{{content.guideDetail3}}</p>
-                <p class="text-center">
-                    <a class="btn btn-cta-primary" href="https://github.com/johnhuang-cn/AngularSEO" target="_blank">More on GitHub</a>
-                </p>
+                <h3 class="sub-title text-left">Config Filter in web.xml</h3>
+                <p>The following is a example:</p>
+				<div class="code-block">
+                    <!--//Use Prismjs - http://prismjs.com/index.html#basic-usage -->
+                    <pre><code class="language-markup">
+&lt;filter&gt;
+	&lt;filter-name&gt;SEOFilter&lt;/filter-name&gt;
+	&lt;display-name&gt;SEOFilter&lt;/display-name&gt;
+	&lt;description&gt;AngularSEO Filter&lt;/description&gt;
+	&lt;filter-class&gt;net.angularseo.SEOFilter&lt;/filter-class&gt;
+	&lt;!-- The path to the PhantomJS binary --&gt;
+	&lt;init-param&gt;
+		&lt;param-name&gt;phantomjs.binary.path&lt;/param-name&gt;
+		&lt;param-value&gt;C:\\phantomjs2.0\\bin\\phantomjs.exe&lt;/param-value&gt;
+	&lt;/init-param&gt;
+	&lt;!-- The time waiting the JS page to finish the dynamic loading, unit is second.
+	 --&gt;
+	&lt;init-param&gt;
+		&lt;param-name&gt;waitForPageLoad&lt;/param-name&gt;
+		&lt;param-value&gt;3&lt;/param-value&gt;
+	&lt;/init-param&gt;
+	&lt;!-- Filter already embed google, bing, baidu UserAgent keywords,
+	     If you want to support more, add them and split with |
+	 --&gt;
+	&lt;init-param&gt;
+		&lt;param-name&gt;robotUserAgents&lt;/param-name&gt;
+		&lt;param-value&gt;YodaoBot|Zealbot&lt;/param-value&gt;
+	&lt;/init-param&gt;
+	&lt;!-- The interval that SEOFilter update the static page snapshot --&gt;
+	&lt;init-param&gt;
+		&lt;param-name&gt;cacheTimeout&lt;/param-name&gt;
+		&lt;param-value&gt;24&lt;/param-value&gt;
+	&lt;/init-param&gt;	
+	&lt;!-- The path to save the static version pages --&gt;
+	&lt;init-param&gt;
+		&lt;param-name&gt;cachePath&lt;/param-name&gt;
+		&lt;param-value&gt;c:\\cache&lt;/param-value&gt;
+	&lt;/init-param&gt;
+	&lt;!-- crawlDepth is used to limited the crawl depth --&gt;
+	&lt;init-param&gt;
+		&lt;param-name&gt;crawlDepth&lt;/param-name&gt;
+		&lt;param-value&gt;10&lt;/param-value&gt;
+	&lt;/init-param&gt;
+	&lt;!-- The default page encoding of this site --&gt;
+	&lt;init-param&gt;
+		&lt;param-name&gt;encoding&lt;/param-name&gt;
+		&lt;param-value&gt;UTF-8&lt;/param-value&gt;
+	&lt;/init-param&gt;		
+&lt;/filter&gt;
+&lt;filter-mapping&gt;
+	&lt;filter-name&gt;SEOFilter&lt;/filter-name&gt;
+	&lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+&lt;/filter-mapping&gt;
+                     </code></pre>
+                </div><!--//code-block-->
             </div><!--//block-->
             
+            <div class="block">
+                <h3 class="sub-title text-left">Full Documentation</h3>
+                <p>Please click <a href="https://github.com/johnhuang-cn/AngularSEO/wiki" target="_blank">here.</a> for full documentation with screenshot。</p>
+            </div>            
             </div><!--//docs-inner-->         
         </div><!--//container-->
     </section><!--//features-->
@@ -207,7 +267,7 @@
             <div class="license-inner">
             <h2 class="title text-center">License</h2>
                 <div class="info">
-                    <p>This AngularSEO Filter is made by <a href="mailto: john.h.cn@gmail.com" target="_blank">John Huang</a> and is <strong>100% FREE</strong> under the <a href="https://github.com/angular/angular.js/blob/master/LICENSE" target="_blank"> MIT License.</a></p>
+                    <p>This AngularSEO Filter is <strong>100% FREE</strong> under the <a href="https://github.com/angular/angular.js/blob/master/LICENSE" target="_blank"> MIT License.</a></p>
                 </div><!--//info-->
             </div><!--//license-inner-->
         </div><!--//container-->
@@ -230,7 +290,7 @@
                         <div class="source">
                             <span class="name">John Huang</span>
                             <br />
-                            <span class="title">Architect</span>
+                            <span class="title">http://www.missionsky.com</span>
                         </div><!--//source-->
                     </div><!--//speech-bubble-->
                 </div><!--//author-message-->
@@ -248,7 +308,7 @@
     <!-- ******FOOTER****** --> 
     <footer class="footer">
         <div class="container text-center">
-            <small class="copyright">This site template is designed with <i class="fa fa-heart"></i> by <a href=https://www.linkedin.com/in/xiaoying" target="_blank">Xiaoying Riley</a> for developers</small>
+            <small class="copyright">This site template is designed with <i class="fa fa-heart"></i> by <a href="https://www.linkedin.com/in/xiaoying" target="_blank">Xiaoying Riley</a> for developers</small>
         </div><!--//container-->
     </footer><!--//footer-->
      

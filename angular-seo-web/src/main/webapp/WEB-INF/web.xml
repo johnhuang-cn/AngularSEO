@@ -5,30 +5,30 @@
 <web-app>
 	<display-name>AngularSEO Sample Web Application</display-name>
 	<filter>
-		<filter-name>RobotFilter</filter-name>
-		<display-name>RobotFilter</display-name>
+		<filter-name>SEOFilter</filter-name>
+		<display-name>SEOFilter</display-name>
 		<description>AngularSEO Filter</description>
-		<filter-class>net.angularseo.RobotFilter</filter-class>
+		<filter-class>net.angularseo.SEOFilter</filter-class>
 		<!-- The path to the PhantomJS binary -->
 		<init-param>
 			<param-name>phantomjs.binary.path</param-name>
 			<param-value>C:\\Users\\john.huang\\Desktop\\AngularJS SEO\\phw\\bin\\phantomjs.exe</param-value>
 		</init-param>
-		<!-- The time to wait the AngularJS page finish loading all data, unit is second.
+		<!-- The time waiting the JS page to finish the dynamic loading, unit is second.
 			 Too short waiting, the page may only load partial content.
 		 -->
 		<init-param>
 			<param-name>waitForPageLoad</param-name>
 			<param-value>3</param-value>
 		</init-param>
-		<!-- Filter already embed google, bing, baidu AserAgent keywords,
-		     If you want to support more, add them and split with |
+		<!-- Filter already embed Googlebot, bingbot, Baiduspider UserAgent keywords,
+		     If you want to support more, add them and split them with |
 		 -->
 		<init-param>
 			<param-name>robotUserAgents</param-name>
 			<param-value>YodaoBot|Zealbot</param-value>
 		</init-param>
-		<!-- The interval that RobotFilter would re-generated the static page in the cache folder -->
+		<!-- The interval that SEOFilter update the static page snapshot -->
 		<init-param>
 			<param-name>cacheTimeout</param-name>
 			<param-value>24</param-value>
@@ -38,10 +38,10 @@
 			<param-name>cachePath</param-name>
 			<param-value>c:\\cache</param-value>
 		</init-param>
-		<!-- RobotFilter crawl the site to generate the static pages, crawlDepth is used to limited the crawl depth -->
+		<!-- crawlDepth is used to limited the crawl depth -->
 		<init-param>
 			<param-name>crawlDepth</param-name>
-			<param-value>2</param-value>
+			<param-value>1</param-value>
 		</init-param>
 		<!-- The default page encoding of this site -->
 		<init-param>
@@ -50,7 +50,7 @@
 		</init-param>		
 	</filter>
 	<filter-mapping>
-		<filter-name>RobotFilter</filter-name>
+		<filter-name>SEOFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 </web-app>
