@@ -38,6 +38,8 @@ public class CrawlTask extends TimerTask {
 			}
 		}
 		
+		manager.addCrawlRequest(new CrawlRequest(config.getRootURL(), config.crawlDepth - 1));
+		
 		// Check if all tasks finished
 		while (!manager.isFinished()) {
 			try {
@@ -45,8 +47,6 @@ public class CrawlTask extends TimerTask {
 			} catch (Exception e) {
 			}
 		}
-		
-		manager.addCrawlRequest(new CrawlRequest(config.getRootURL(), config.crawlDepth - 1));
 		
 		// Update the time of this cache
 		manager.updateCachedTime();

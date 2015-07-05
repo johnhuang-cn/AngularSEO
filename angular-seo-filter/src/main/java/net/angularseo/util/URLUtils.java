@@ -30,4 +30,8 @@ public class URLUtils {
         escapeUrl = escapeUrl.replaceFirst("!", "_21");
         return escapeUrl;
 	}
+	
+	public static boolean isFromSearchEngine(String url) {
+		return url.indexOf("_23") > 0 || url.indexOf("_21") > 0;
+	}
 }

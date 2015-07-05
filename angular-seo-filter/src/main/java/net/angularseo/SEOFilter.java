@@ -11,9 +11,12 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.UnavailableException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import net.angularseo.crawler.CachePageManager;
+import net.angularseo.crawler.CrawlRequest;
 import net.angularseo.crawler.CrawlTaskManager;
+import net.angularseo.util.URLUtils;
 import net.angularseo.util.UserAgentUtil;
 
 import org.slf4j.Logger;
@@ -22,7 +25,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Servlet Filter implementation class RobotFilter
  */
-public class RobotFilter implements Filter {
+public class SEOFilter implements Filter {
 	
 	// The time to wait js dynamic page finish loading
 	private static int Default_WAIT_FOR_PAGE_LOAD = 5;
@@ -30,14 +33,14 @@ public class RobotFilter implements Filter {
 	// the unit is hour
 	private static int DEFAULT_CACHE_TIMEOUT = 24;
 	
-	private Logger logger = LoggerFactory.getLogger(RobotFilter.class);
+	private Logger logger = LoggerFactory.getLogger(SEOFilter.class);
 	
 	private boolean isFirst = true; 
 	
     /**
      * Default constructor. 
      */
-    public RobotFilter() {
+    public SEOFilter() {
     }
 
 	/**
@@ -120,18 +123,21 @@ public class RobotFilter implements Filter {
 		HttpServletRequest req = (HttpServletRequest) request;
 		if (isFirst) {
 			String rootUrl = req.getRequestURL().toString();
+			// get http://host/
 			rootUrl = rootUrl.replaceFirst("(http://[^/]*).*", "$1");
 			AngularSEOConfig.getConfig().setRootURL(rootUrl);
 			isFirst = false;
 		}
 		
 		String userAgent = req.getHeader("User-Agent");
-		logger.info(userAgent); // TODO: remove this tmp code
+		logger.debug(userAgent);
 		if (UserAgentUtil.isRobot(req) && isTextRequest(req)) {
 			logger.info("Search engine robot request: {}", userAgent);
-			logger.info("Load static html for robot: " + req.getRequestURL());
-			String html = CachePageManager.get(req.getRequestURL().toString());
+			logger.info("Load static html for robot: " + (req.getRequestURL().toString() + "?" + req.getQueryString()));
+			String html = CachePageManager.get(req.getRequestURL().toString() + "?" + req.getQueryString());
 			if (html == null) {
+				// Crawl it then it can be crawled next time
+				CrawlTaskManager.getInstance().addCrawlRequest(new CrawlRequest(req.getRequestURL().toString() + "?" + req.getQueryString(), 0));
 				chain.doFilter(request, response);
 			}
 			else {
@@ -140,7 +146,16 @@ public class RobotFilter implements Filter {
 			}
 		}
 		else {
-			chain.doFilter(request, response);
+			String url = req.getRequestURL().toString();
+			// _23 _21  _23_21
+			if (URLUtils.isFromSearchEngine(url)) {
+				String redirectUrl = URLUtils.toHashBang(url);
+				redirectUrl +="?" + req.getQueryString();
+				((HttpServletResponse) response).sendRedirect(redirectUrl);
+			}
+			else {
+				chain.doFilter(request, response);
+			}
 		}
 	}
 	

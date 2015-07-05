@@ -57,7 +57,7 @@ public class Crawler implements Runnable {
         // The current url is matched with request url, the location may be changed by AngularJS script
         // need save both two
         if (!request.url.equals(currentUrl)) {
-        	CachePageManager.save(URLUtils.escapeHashBang(request.url), pageSource, config.encoding);
+        	CachePageManager.save(request.url, pageSource, config.encoding);
         }
         
         driver.quit();

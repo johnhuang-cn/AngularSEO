@@ -3,15 +3,18 @@ package net.angularseo.crawler;
 import java.io.File;
 import java.io.IOException;
 
+import javax.servlet.http.HttpServletResponse;
+
 import net.angularseo.AngularSEOConfig;
-import net.angularseo.RobotFilter;
+import net.angularseo.SEOFilter;
+import net.angularseo.util.URLUtils;
 
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class CachePageManager {
-	private static Logger logger = LoggerFactory.getLogger(RobotFilter.class);
+	private static Logger logger = LoggerFactory.getLogger(SEOFilter.class);
 	
 	public static CachePageManager instance;
 	private File cacheFolder;
@@ -33,6 +36,7 @@ public class CachePageManager {
 			return;
 		}
 		
+		url = URLUtils.escapeHashBang(url);
 		String name = u2f(url);
 		File f = new java.io.File(instance.cacheFolder, name);
 		try {
@@ -59,6 +63,9 @@ public class CachePageManager {
 		return pageSource;
 	}
 	
+	/**
+	 *  Url name to file name
+	 */
 	public static String u2f(String url) {
 		url = url.replaceFirst("http://[^/]*/?", "/");
 		String name = url.replaceAll("[\\\\/:\\*\\?<>|\"]", "_");
@@ -79,5 +86,20 @@ public class CachePageManager {
 		url = url.replaceFirst("(http://[^/]*).*", "$1");
 		System.out.println(url);
 		
+		url = "http://www.abc.com/_23_21/a.html";
+		String reg = "[\\_23|\\_21]+";
+		System.out.println(url.matches(reg));
+		
+		url = "http://www.abc.com/_23/a.html";
+		reg = "_23|_21";
+		System.out.println(url.matches(reg));
+		
+		url = "http://www.abc.com/_21/a.html";
+		reg = "_23|_21";
+		System.out.println(url.matches(reg));
+		
+		url = "http://www.abc.com/#/a.html";
+		reg = "_23|_21";
+		System.out.println(url.matches(reg));
 	}
 }
