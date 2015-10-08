@@ -52,7 +52,7 @@ I built a simple AngularJS site (http://www.angularseo.net) to validate it. Afte
 
 # Guide
 
-[Click here](https://github.com/angular/angular.js/wiki) for more details.
+[Click here](https://github.com/johnhuang-cn/AngularSEO/wiki) for more details.
 
 # Contact
 
