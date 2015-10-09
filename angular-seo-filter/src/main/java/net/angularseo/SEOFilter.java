@@ -134,10 +134,14 @@ public class SEOFilter implements Filter {
 		if (UserAgentUtil.isRobot(req) && isTextRequest(req)) {
 			logger.info("Search engine robot request: {}", userAgent);
 			logger.info("Load static html for robot: " + (req.getRequestURL().toString() + "?" + req.getQueryString()));
-			String html = CachePageManager.get(req.getRequestURL().toString() + "?" + req.getQueryString());
+			String url = req.getRequestURL().toString();
+			if (req.getQueryString() != null) {
+				url += "?" + req.getQueryString();
+			}
+			String html = CachePageManager.get(url);
 			if (html == null) {
 				// Crawl it then it can be crawled next time
-				CrawlTaskManager.getInstance().addCrawlRequest(new CrawlRequest(req.getRequestURL().toString() + "?" + req.getQueryString(), 0));
+				CrawlTaskManager.getInstance().addCrawlRequest(new CrawlRequest(url, 0));
 				chain.doFilter(request, response);
 			}
 			else {
